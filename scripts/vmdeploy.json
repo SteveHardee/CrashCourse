@@ -128,7 +128,7 @@
     "nicName": "[concat(parameters('vmName'), '_Nic')]",
     "githubURL": "https://raw.githubusercontent.com/SteveHardee/CrashCourse/",    
     "nictemplateURI": "[concat(variables('githubURL'), parameters('CustomBranch'), '/scripts/nicdeploy.json')]",
-    "pipURI": "[concat(variables('githuburl'), variables('CustomBranch'), '/scripts/PIP.json')]",
+    "pipURI": "[concat(variables('githuburl'), parameters('CustomBranch'), '/scripts/PIP.json')]",
     "artifactsURI": "[concat(variables('githubURL'), parameters('CustomBranch'), '/artifacts/')]"
   },
   "resources": [
