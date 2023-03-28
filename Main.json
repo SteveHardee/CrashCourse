@@ -45,7 +45,7 @@
         "githuburl": "https://raw.githubusercontent.com/SteveHardee/AzureVM/",
         "templates": {
             "vmURI": "[concat(variables('githuburl'), variables('CustomBranch'), '/scripts/vmdeploy.json')]",
-            "dcVMURI": "[concat(variables('githuburl'), variables('CustomBranch'), '/scripts/adforest-dsc.json')]"
+            "dcVMURI": "[concat(variables('githuburl'), variables('CustomBranch'), '/scripts/adforest-dsc.json')]"            
         },
         "adminUserName": "AzureAdmin",
         "VM1Name": "DC1",
@@ -358,16 +358,6 @@
                     },
                     "timeZone": {
                         "value": "Eastern Standard Time"
-                    },
-                    "publicIpAddressName": {
-                        "value": "Win10-Manual-PublicIP"
-                    },
-                    "publicIpAddressType": {
-                        "value": "Static"
-                    },
-                    "publicIpAddressSku": {
-                        "value": "Standard"
-                    
                     },
                     "DomainJoin": {
                         "value": "Yes"
