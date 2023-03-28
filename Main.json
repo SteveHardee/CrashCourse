@@ -358,6 +358,16 @@
                     "timeZone": {
                         "value": "Eastern Standard Time"
                     },
+                    "publicIpAddressName": {
+                        "value": "Win10-Manual-PublicIP"
+                    },
+                    "publicIpAddressType": {
+                        "value": "Static"
+                    },
+                    "publicIpAddressSku": {
+                        "value": "Standard"
+                    
+                    },
                     "DomainJoin": {
                         "value": "Yes"
                     },
