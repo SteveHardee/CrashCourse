@@ -194,7 +194,7 @@
                 "value": "[parameters('StaticIPAddress')]"
               },
               "publicIPAddressesID": {
-                "value": "[resourceId('Microsoft.Network/publicIPAddresses','Win10-Manual-PublicIP'))]"
+                "value": "[resourceId('Microsoft.Network/publicIPAddresses','Win10-Manual-PublicIP')]"
               },
               "CustomDNS": {
                 "value": "[parameters('CustomDNS')]"
