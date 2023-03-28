@@ -85,28 +85,16 @@
                         "value": "[parameters('vmSize')]"
                     },
                     "vmOS": {
-                        "value": "2022-Datacenter-smalldisk-g2"
+                        "value": "2022-datacenter-smalldisk-g2"
                     },
                     "vmOSversion": {
                         "value": "latest"
-                    },
-                    "vmPublisher": {
-                         "value": "MicrosoftWindowsServer"
-                    },
-                    "vmOffer": {
-                        "value": "WindowsServer"
                     },
                     "storageType": {
                         "value": "Premium_LRS"
                     },
                     "autoShutdownTime": {
                         "value": "None"
-                    },
-                    "licensetype": {
-                        "value": "Windows_Server"
-                    },
-                    "timeZone": {
-                        "value": "Eastern Standard Time"
                     },
                     "NeedsHA": {
                         "value": "No"
