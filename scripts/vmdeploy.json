@@ -133,7 +133,7 @@
   },
   "resources": [
     {
-      "condition": "[equals(parameters('needspublicip'), false)]",
+      "condition": "[equals(parameters('needspublicip'), bool('false'))]",
       "apiVersion": "2021-04-01",
       "name": "[concat('linked-nic-', parameters('vmName'))]",
       "type": "Microsoft.Resources/deployments",
@@ -167,7 +167,7 @@
       "dependsOn": []
     },
     {
-      "condition": "[equals(parameters('needspublicip'), true)]",
+      "condition": "[equals(parameters('needspublicip'), bool('true'))]",
       "apiVersion": "2021-04-01",
       "name": "[concat('linked-nic-', parameters('vmName'))]",
       "type": "Microsoft.Resources/deployments",
