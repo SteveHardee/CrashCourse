@@ -37,14 +37,8 @@
             "type": "securestring"
         }
 
-
     },
     "variables": {
-        
-        "publicIpAddressName": "",
-        "publicIpAddressType": "",
-        "publicIpAddressSku": "",
-        
 		"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vNetName'), parameters('VNetSubnetName'))]",
         "nsgname": "[concat(resourceGroup().name, '-nsg')]",
         "CustomBranch": "master",
@@ -366,12 +360,15 @@
                         "value": "Eastern Standard Time"
                     },
                     "publicIpAddressName": {
+                        "type": "string",
                         "value": "Win10-Manual-PublicIP"
                     },
                     "publicIpAddressType": {
+                        "type": "string",
                         "value": "Static"
                     },
                     "publicIpAddressSku": {
+                        "type": "string",
                         "value": "Standard"
                     
                     },
