@@ -40,7 +40,6 @@
     },
     "variables": {
 		"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vNetName'), parameters('VNetSubnetName'))]",
-        "publicIpAddresses": "ncat('Microsoft.Network/publicIpAddresses/', parameters('publicIpAddressName'))]",
         "nsgname": "[concat(resourceGroup().name, '-nsg')]",
         "CustomBranch": "master",
         "githuburl": "https://raw.githubusercontent.com/SteveHardee/AzureVM/",
