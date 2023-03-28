@@ -204,7 +204,10 @@
                     },
                     "DomainJoinPassword": {
                         "value": "[parameters('adminPassword')]"
-                    }
+                    },
+                    "CustomBranch": {
+                    "value": "[variables('CustomBranch')]"
+                   }
                 }
             },
             "dependsOn": [
@@ -287,6 +290,9 @@
                     },
                     "DomainJoinPassword": {
                         "value": "[parameters('adminPassword')]"
+                    },
+                    "CustomBranch": {
+                        "value": "[variables('CustomBranch')]"
                     }
                 }
             },
@@ -373,6 +379,9 @@
                     },
                     "needspublicip": { 
                         "value": "[bool('true')]"
+                    },
+                    "CustomBranch": {
+                        "value": "[variables('CustomBranch')]"
                     }
                 }
             },
@@ -456,6 +465,9 @@
                     },
                     "DomainJoinPassword": {
                         "value": "[parameters('adminPassword')]"
+                    },
+                    "CustomBranch": {
+                        "value": "[variables('CustomBranch')]"
                     }
                 }
             },
@@ -540,6 +552,9 @@
                     },
                     "DomainJoinPassword": {
                         "value": "[parameters('adminPassword')]"
+                    },
+                    "CustomBranch": {
+                        "value": "[variables('CustomBranch')]"
                     }
                 }
             },
@@ -624,6 +639,9 @@
                     },
                     "DomainJoinPassword": {
                         "value": "[parameters('adminPassword')]"
+                    },
+                    "CustomBranch": {
+                        "value": "[variables('CustomBranch')]"
                     }
                 }
             },
