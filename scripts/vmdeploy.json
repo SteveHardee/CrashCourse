@@ -49,6 +49,10 @@
     "acceleratedNetworking": {
 	    "type": "bool"
 	  },
+    "needspublicip": {
+	    "type": "bool",
+      "defaultValue": "false"
+	  },
     "storageType": {
       "type": "string"
     },
@@ -124,10 +128,12 @@
     "nicName": "[concat(parameters('vmName'), '_Nic')]",
     "githubURL": "https://raw.githubusercontent.com/SteveHardee/AzureVM/",    
     "nictemplateURI": "[concat(variables('githubURL'), parameters('CustomBranch'), '/scripts/nicdeploy.json')]",
+    "pipURI": "[concat(variables('githuburl'), variables('CustomBranch'), '/scripts/PIP.json')]",
     "artifactsURI": "[concat(variables('githubURL'), parameters('CustomBranch'), '/artifacts/')]"
   },
   "resources": [
     {
+      "condition": "[equals(parameters('needspublicip'), 'false')]",
       "apiVersion": "2021-04-01",
       "name": "[concat('linked-nic-', parameters('vmName'))]",
       "type": "Microsoft.Resources/deployments",
@@ -157,6 +163,60 @@
                 "value": "[parameters('CustomDNS')]"
               }
           }
+      },
+      "dependsOn": []
+    },
+    {
+      "condition": "[equals(parameters('needspublicip'), 'true')]",
+      "apiVersion": "2021-04-01",
+      "name": "[concat('linked-nic-', parameters('vmName'))]",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+              "uri": "[variables('nictemplateURI')]",
+              "contentVersion": "1.0.0.0"
+          },
+          "parameters": {
+              "nicName": {
+                "value": "[variables('nicName')]"
+              },
+              "subnetRef": {
+                "value": "[parameters('subnetRef')]"
+              },
+              "acceleratedNetworking": {
+                "value": "[parameters('acceleratedNetworking')]"
+              },
+              "DHCPType": {
+                "value": "[parameters('DHCPType')]"
+              },
+              "StaticIPAddress": {
+                "value": "[parameters('StaticIPAddress')]"
+              },
+              "publicIPAddressesID": {
+                "value": "[resourceId('Microsoft.Network/publicIPAddresses','Win10-Manual-PublicIP'))]"
+              },
+              "CustomDNS": {
+                "value": "[parameters('CustomDNS')]"
+              }
+          }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', 'linked-PIP')]"
+      ]
+    },
+    {
+      "condition": "[equals(parameters('needspublicip'), 'true')]",
+      "apiVersion": "2021-04-01",
+      "name": "linked-PIP",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+              "uri": "[variables('pipURI')]",
+              "contentVersion": "1.0.0.0"
+          },
+          "parameters": {}
       },
       "dependsOn": []
     },
