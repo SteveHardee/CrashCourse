@@ -8,7 +8,7 @@
     "subnetRef": {
       "type": "string"
     },
-    "publicIPAddressesID": {
+    "publicIPAddressID": {
       "type": "string",
       "defaultValue": ""
     },
@@ -43,7 +43,7 @@
   },
   "resources": [
     {
-      "condition": "[equals(parameters('publicIPAddressesID'), '')]",
+      "condition": "[equals(parameters('publicIPAddressID'), '')]",
       "name": "[parameters('nicName')]",
       "type": "Microsoft.Network/networkInterfaces",
       "apiVersion": "2021-03-01",
@@ -70,7 +70,7 @@
       }
     },
     {
-      "condition": "[not(equals(parameters('publicIPAddressesID'), ''))]",
+      "condition": "[not(equals(parameters('publicIPAddressID'), ''))]",
       "name": "[concat(parameters('nicName'),'-pip')]",
       "type": "Microsoft.Network/networkInterfaces",
       "apiVersion": "2021-03-01",
@@ -83,7 +83,7 @@
             "name": "ipconfig1",
             "properties": {
               "publicIPAddress": {
-                "id": "[parameters('publicIPAddressesID')]"
+                "id": "[parameters('publicIPAddressID')]"
               },
               "subnet": {
                 "id": "[parameters('subnetRef')]"

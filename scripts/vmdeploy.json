@@ -125,7 +125,7 @@
   },
   "variables": {
     "osDiskName": "[concat(parameters('vmName'),'_OSDisk')]",
-    "nicName": "[concat(parameters('vmName'), '_Nic')]",
+    "nicName": "[concat(parameters('vmName'), '-nic')]",
     "githubURL": "https://raw.githubusercontent.com/SteveHardee/CrashCourse/",    
     "nictemplateURI": "[concat(variables('githubURL'), parameters('CustomBranch'), '/scripts/nicdeploy.json')]",
     "pipURI": "[concat(variables('githubURL'), parameters('CustomBranch'), '/scripts/PIP.json')]",
@@ -169,7 +169,7 @@
     {
       "condition": "[equals(parameters('needspublicip'), bool('true'))]",
       "apiVersion": "2021-04-01",
-      "name": "[concat('linked-nic-PIP-', parameters('vmName'))]",
+      "name": "[concat('linked-nic-pip-', parameters('vmName'))]",
       "type": "Microsoft.Resources/deployments",
       "properties": {
           "mode": "Incremental",
@@ -193,7 +193,7 @@
               "StaticIPAddress": {
                 "value": "[parameters('StaticIPAddress')]"
               },
-              "publicIPAddressesID": {
+              "publicIPAddressID": {
                 "value": "[resourceId('Microsoft.Network/publicIPAddresses','Win10-Manual-PublicIP')]"
               },
               "CustomDNS": {
@@ -202,13 +202,13 @@
           }
       },
       "dependsOn": [
-        "[resourceId('Microsoft.Resources/deployments', 'linked-PIP')]"
+        "[resourceId('Microsoft.Resources/deployments', 'linked-pip')]"
       ]
     },
     {
       "condition": "[equals(parameters('needspublicip'), 'true')]",
       "apiVersion": "2021-04-01",
-      "name": "linked-PIP",
+      "name": "linked-pip",
       "type": "Microsoft.Resources/deployments",
       "properties": {
           "mode": "Incremental",
