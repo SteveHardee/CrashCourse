@@ -372,7 +372,7 @@
                         "value": "[parameters('adminPassword')]"
                     },
                     "needspublicip": { 
-                        "value": true
+                        "value": "[bool('true')]"
                     }
                 }
             },
