@@ -35,19 +35,16 @@
 		},
         "adminPassword": {
             "type": "securestring"
-        },
-        "publicIpAddressName": {
-            "type": "string"
-        },
-        "publicIpAddressType": {
-            "type": "string"
-        },
-        "publicIpAddressSku": {
-            "type": "string"
         }
+
 
     },
     "variables": {
+        
+        "publicIpAddressName": "",
+        "publicIpAddressType": "",
+        "publicIpAddressSku": "",
+        
 		"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vNetName'), parameters('VNetSubnetName'))]",
         "nsgname": "[concat(resourceGroup().name, '-nsg')]",
         "CustomBranch": "master",
