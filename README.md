@@ -12,7 +12,7 @@ The below `Deploy to Azure` button will launch your Azure Portal with a template
 
 | Deploy LAB to Azure | Instructions | 
 |:-------|:-------| 
-|  [![Deploy LAB](https://docs.microsoft.com/en-us/azure/templates/media/deploy-to-azure.svg)](https://portal.azure.com/#blade/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2FSteveHardee%2FAzureVM%2Fmain%2FMain.json) |  [Deployment Instructions](https://github.com/SteveHardee/AzureVM/blob/main/README.md#Instructions)
+|  [![Deploy LAB](https://docs.microsoft.com/en-us/azure/templates/media/deploy-to-azure.svg)](https://portal.azure.com/#blade/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2FSteveHardee%2FCrashCourse%2Fmain%2FMain.json) |  [Deployment Instructions](hhttps://github.com/SteveHardee/CrashCourse/blob/main/README.md#Instructions)
 
 <br>
 
@@ -50,7 +50,7 @@ This LAB Template will require that you provide a Resource Group (RG) and Virtua
 It is recommended to build a new RG and VNET for this lab.<br>
 <br>
 The following will walk you through creating this.<br>
-If you already have a new RG and VNET, [skip to the next step](https://github.com/SteveHardee/AzureVM#execute-the-template) 
+If you already have a new RG and VNET, [skip to the next step](https://github.com/SteveHardee/CrashCourse#execute-the-template) 
 
 
 ### Creating a new Resource Group and vNet
@@ -93,7 +93,7 @@ If you already have a new RG and VNET, [skip to the next step](https://github.co
  ### Execute the template
  - With our new resource group and network ready, we can now launch our template.
   
-   [![Deploy LAB](https://docs.microsoft.com/en-us/azure/templates/media/deploy-to-azure.svg)](https://portal.azure.com/#blade/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2FSteveHardee%2FAzureVM%2Fmain%2FMain.json)
+   [![Deploy LAB](https://docs.microsoft.com/en-us/azure/templates/media/deploy-to-azure.svg)](https://portal.azure.com/#blade/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2FSteveHardee%2FCrashCourse%2Fmain%2FMain.json)
 
 <br>
 
@@ -106,7 +106,7 @@ If you already have a new RG and VNET, [skip to the next step](https://github.co
     - We will need to provide our resource group that we just created - `Lab01` 
     - Confirm the region that we want, by default this is `East US 2`
     - Confirm our VM Size, by default this is `Standard_D2as_v5`
-    - Provide our VNET Name. This is the Virtual Network that we created in our [Prerequisites](https://github.com/SteveHardee/AzureVM#prerequisites) section, which we used `Lab01-VNET`
+    - Provide our VNET Name. This is the Virtual Network that we created in our [Prerequisites](https://github.com/SteveHardee/CrashCourse#prerequisites) section, which we used `Lab01-VNET`
     - Provide our VNET Subnet name, unless you changed this it will be the provided `default`
     - Provide our Domain Controllers IP Address, by default the script uses `10.0.0.4`
     - Finally, we need to provide the Administrators password for the VMs. This will set the `AzureAdmin` account password on the VMs.
