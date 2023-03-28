@@ -40,6 +40,7 @@
     },
     "variables": {
 		"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vNetName'), parameters('VNetSubnetName'))]",
+        "publicIpAddresses": "ncat('Microsoft.Network/publicIpAddresses/', parameters('publicIpAddressName'))]",
         "nsgname": "[concat(resourceGroup().name, '-nsg')]",
         "CustomBranch": "master",
         "githuburl": "https://raw.githubusercontent.com/SteveHardee/AzureVM/",
@@ -360,15 +361,12 @@
                         "value": "Eastern Standard Time"
                     },
                     "publicIpAddressName": {
-                        "type": "string",
                         "value": "Win10-Manual-PublicIP"
                     },
                     "publicIpAddressType": {
-                        "type": "string",
                         "value": "Static"
                     },
                     "publicIpAddressSku": {
-                        "type": "string",
                         "value": "Standard"
                     
                     },
