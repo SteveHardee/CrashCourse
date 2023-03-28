@@ -90,11 +90,23 @@
                     "vmOSversion": {
                         "value": "latest"
                     },
+                    "vmPublisher": {
+                         "value": "MicrosoftWindowsServer"
+                    },
+                    "vmOffer": {
+                        "value": "WindowsServer"
+                    },
                     "storageType": {
                         "value": "Premium_LRS"
                     },
                     "autoShutdownTime": {
                         "value": "None"
+                    },
+                    "licensetype": {
+                        "value": "Windows_Server"
+                    },
+                    "timeZone": {
+                        "value": "Eastern Standard Time"
                     },
                     "NeedsHA": {
                         "value": "No"
