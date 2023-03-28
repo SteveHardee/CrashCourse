@@ -370,6 +370,9 @@
                     },
                     "DomainJoinPassword": {
                         "value": "[parameters('adminPassword')]"
+                    },
+                    "needspublicip": { 
+                        "value": "true"
                     }
                 }
             },
