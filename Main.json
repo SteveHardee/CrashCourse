@@ -35,7 +35,17 @@
 		},
         "adminPassword": {
             "type": "securestring"
+        },
+        "publicIpAddressName": {
+            "type": "string"
+        },
+        "publicIpAddressType": {
+            "type": "string"
+        },
+        "publicIpAddressSku": {
+            "type": "string"
         }
+
     },
     "variables": {
 		"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vNetName'), parameters('VNetSubnetName'))]",
