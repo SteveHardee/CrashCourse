@@ -11,7 +11,7 @@
     "resources": [
         {
             "type": "Microsoft.Network/publicIPAddresses",
-            "apiVersion": "2020-08-01",
+            "apiVersion": "2022-07-01",
             "name": "[parameters('PIP-Name')]",
             "location": "[resourceGroup().location]",
             "sku": {

@@ -224,7 +224,8 @@
         "AutoShutDownTime": "[parameters('autoShutdownTime')]"
       },
       "dependsOn": [
-        "[resourceId('Microsoft.Resources/deployments', concat('linked-nic-', parameters('vmName')))]"
+        "[resourceId('Microsoft.Resources/deployments', concat('linked-nic-', parameters('vmName')))]",
+        "[resourceId('Microsoft.Resources/deployments', concat('linked-nic-pip-', parameters('vmName')))]"
       ],
       "properties": {
         "licenseType": "[parameters('licensetype')]",
