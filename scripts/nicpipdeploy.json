@@ -1,0 +1,75 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "nicName": {
+      "type": "string"
+    },
+    "subnetRef": {
+      "type": "string"
+    },
+    "publicIPAddressID": {
+      "type": "string"
+    },
+    "acceleratedNetworking": {
+      "type": "bool",
+      "defaultValue": false
+    },
+    "DHCPType": {
+      "type": "string",
+      "defaultValue": "Dynamic",
+      "allowedValues": [
+        "Dynamic",
+        "Static"
+      ]
+    },
+    "StaticIPAddress": {
+      "type": "string",
+      "defaultValue": "10.0.0.1"
+    },
+    "CustomDNS": {
+      "type": "array",
+      "defaultValue": [
+        "AzureProvided"
+      ],
+      "metadata":{
+        "description": "If using custom, must be in the format [\"ipaddress1\", \"ipaddress2\"]"
+      }
+    }
+  },
+  "variables": {
+    "CustomDNSSettings": "[if(contains(parameters('CustomDNS'), 'AzureProvided'), '', parameters('CustomDNS'))]"
+  },
+  "resources": [
+    {
+      "name": "[parameters('nicName')]",
+      "type": "Microsoft.Network/networkInterfaces",
+      "apiVersion": "2022-07-01",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [],
+      "properties": {
+	    "enableAcceleratedNetworking": "[parameters('acceleratedNetworking')]",
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "publicIPAddress": {
+                "id": "[parameters('publicIPAddressID')]"
+              },
+              "subnet": {
+                "id": "[parameters('subnetRef')]"
+              },
+              "privateIPAllocationMethod": "[parameters('DHCPType')]",
+              "privateIpAddressVersion": "IPv4",
+              "privateIPAddress": "[parameters('StaticIPAddress')]"
+            }
+          }
+        ],
+        "dnsSettings": {
+          "dnsServers": "[variables('CustomDNSSettings')]"
+        }
+      }
+    }
+  ],
+  "outputs": {}
+}
