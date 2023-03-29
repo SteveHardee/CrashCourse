@@ -86,7 +86,7 @@
         }
     },
     "variables": {
-        "githubURL": "https://raw.githubusercontent.com/SteveHardee/CrashCourse/",
+        "githubURL": "https://raw.githubusercontent.com/SeanGreenbaum/CrashCourse/",
         "templates": {
             "vmURI": "[concat(variables('githubURL'), parameters('CustomBranch'), '/scripts/vmdeploy.json')]"
         },
@@ -239,6 +239,28 @@
                 },
                 "protectedSettings": {}
             }
+        },
+        {
+          "name": "[concat(parameters('vmName'), '/PostDCConfig')]",
+          "type":"Microsoft.Compute/virtualMachines/extensions",
+          "location": "[resourceGroup().location]",
+          "apiVersion": "2022-11-01",
+          "dependsOn":  [
+            "[concat(parameters('vmName'), '/AD-Forest')]"
+          ],
+          "properties": {
+            "publisher": "Microsoft.Compute",
+            "type": "CustomScriptExtension",
+            "typeHandlerVersion": "1.9",
+            "autoUpgradeMinorVersion": true,
+            "settings": {
+                "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File DCPostConfig.ps1 -Password ', parameters('adminPassword'))]",
+                "fileUris": [
+                    "[uri(variables('artifactsuri'), 'DCPostConfig.ps1')]"
+                ]
+            },
+            "protectedSettings": {}
+          }
         }
     ],
     "outputs": {}
