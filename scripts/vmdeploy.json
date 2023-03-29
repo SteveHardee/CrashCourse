@@ -199,7 +199,7 @@
     {
       "condition": "[equals(parameters('needspublicip'), 'true')]",
       "apiVersion": "2021-04-01",
-      "name": "linked-pip",
+      "name": "[concat('linked-pip-', parameters('vmName'))]",
       "type": "Microsoft.Resources/deployments",
       "properties": {
           "mode": "Incremental",
@@ -207,7 +207,11 @@
               "uri": "[variables('pipURI')]",
               "contentVersion": "1.0.0.0"
           },
-          "parameters": {}
+          "parameters": {
+            "PIP-Name": {
+              "value": "[concat(parameters('vmName'), '-PIP')]"
+            }
+          }
       },
       "dependsOn": []
     },
