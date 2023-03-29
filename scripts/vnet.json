@@ -16,7 +16,7 @@
         }
     },
   "variables": {
-    "vNetName": "[concat(resourceGroup().name, '-Net')]",
+    "vNetName": "[parameters('vNetName')]",
 	  "SubnetName": "Subnet1"
   },
   "resources": [
