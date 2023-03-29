@@ -43,7 +43,6 @@
   },
   "resources": [
     {
-      "condition": "[equals(parameters('publicIPAddressID'), '')]",
       "name": "[parameters('nicName')]",
       "type": "Microsoft.Network/networkInterfaces",
       "apiVersion": "2022-07-01",
@@ -55,35 +54,8 @@
           {
             "name": "ipconfig1",
             "properties": {
-                "subnet": {
-                  "id": "[parameters('subnetRef')]"
-              },
-              "privateIPAllocationMethod": "[parameters('DHCPType')]",
-              "privateIpAddressVersion": "IPv4",
-              "privateIPAddress": "[parameters('StaticIPAddress')]"
-            }
-          }
-        ],
-        "dnsSettings": {
-          "dnsServers": "[variables('CustomDNSSettings')]"
-        }
-      }
-    },
-    {
-      "condition": "[not(equals(parameters('publicIPAddressID'), ''))]",
-      "name": "[concat(parameters('nicName'),'-pip')]",
-      "type": "Microsoft.Network/networkInterfaces",
-      "apiVersion": "2022-07-01",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [],
-      "properties": {
-	    "enableAcceleratedNetworking": "[parameters('acceleratedNetworking')]",
-        "ipConfigurations": [
-          {
-            "name": "ipconfig1",
-            "properties": {
               "publicIPAddress": {
-                "id": "[parameters('publicIPAddressID')]"
+                "id": "[if(equals(parameters('publicIPAddressID'), ''), json('null'), parameters('publicIPAddressID'))]"
               },
               "subnet": {
                 "id": "[parameters('subnetRef')]"
