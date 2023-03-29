@@ -80,6 +80,9 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
+                    "vNetName": {
+                        "value": "[variables('vNetName')]"
+                    },
                     "AddressSpace": {
                         "value": "[variables('vNetAddressSpace')]"
                     },
@@ -129,9 +132,6 @@
                     },
                     "autoShutdownTime": {
                         "value": "None"
-                    },
-                    "NeedsHA": {
-                        "value": "No"
                     },
                     "subnetRef": {
                         "value": "[variables('subnetRef')]"
