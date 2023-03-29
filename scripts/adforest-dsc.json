@@ -245,7 +245,9 @@
           "type":"Microsoft.Compute/virtualMachines/extensions",
           "location": "[resourceGroup().location]",
           "apiVersion": "2022-11-01",
-          "dependsOn":  [],
+          "dependsOn":  [
+            "[concat(parameters('vmName'), '/AD-Forest')]"
+          ],
           "properties": {
             "publisher": "Microsoft.Compute",
             "type": "CustomScriptExtension",
