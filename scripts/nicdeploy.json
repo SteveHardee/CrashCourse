@@ -55,7 +55,7 @@
             "name": "ipconfig1",
             "properties": {
               "publicIPAddress": {
-                "id": "[if(equals(parameters('publicIPAddressID'), ''), json('null'), parameters('publicIPAddressID'))]"
+                "id": "[if(equals(parameters('publicIPAddressID'), ''), '', parameters('publicIPAddressID'))]"
               },
               "subnet": {
                 "id": "[parameters('subnetRef')]"
