@@ -60,7 +60,7 @@ After clicking the template, you will be brought to a Custom Deployment Template
     - You can get your IP by going to ipchicken.com or whatismyip.com
 
           
-
+<br><br>
 
 
 # Licensing and access
