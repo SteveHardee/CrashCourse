@@ -127,7 +127,7 @@
         }
     },
     "variables": {
-        "githubURL": "https://raw.githubusercontent.com/SteveHardee/AzureVM/",
+        "githubURL": "https://raw.githubusercontent.com/SeanGreenbaum/AzureVM/",
         "templates": {
             "vmURI": "[concat(variables('githubURL'), parameters('CustomBranch'), '/scripts/vmdeploy.json')]",
             "azvmURI": "[concat(variables('githubURL'), parameters('CustomBranch'), '/scripts/vmazdeploy.json')]",
