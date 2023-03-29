@@ -1,12 +1,14 @@
 # Welcome  
 
-Before deploying your lab, please read the instructions and understand the prerequisites, setup, licensing requirements, and parameters. Special thanks to [Sean Greenbaum](https://GitHub.com/SeanGreenbaum) for his assistance and initial code.
+This lab was specifically designed for the `Security Crash Course training`.  Special thanks to [Sean Greenbaum](https://GitHub.com/SeanGreenbaum) for his assistance and initial code that made this possible.
 <br><br>
 # Overview
 
 ## Description
 
-The below `Deploy to Azure` button will launch your Azure Portal with a template that will prompt you for some basic information. This will create multiple Virtual Machines (VMs) for a lab environment and join them to the Active Directory domain.
+The below `Deploy to Azure` button will launch your Azure Portal with a template that will prompt you for some basic information. This will create a Network Security Group (NSG), Virtual Network, as well as multiple Virtual Machines (VMs). The Virtual Machine `DC1` will be promoted to a Domain Controller with the domain `contoso.com`, with the remaining Virtual Machines joining this domain.
+
+The only information that you need to provide is the Resource Group that you would like this deployed to and the Administrative Password that you would like assigned to the Virtual Machines.
 
 <br>
 
@@ -44,99 +46,20 @@ The template will prompt you for the AzureAdmin password.
 <br>
 
 # Instructions 
-## **Prerequisites** 
 
-This LAB Template will require that you provide a Resource Group (RG) and Virtual Network (VNET). <br>
-It is recommended to build a new RG and VNET for this lab.<br>
-<br>
-The following will walk you through creating this.<br>
-If you already have a new RG and VNET, [skip to the next step](https://github.com/SteveHardee/CrashCourse#execute-the-template) 
+After clicking the template, you will be brought to a Custom Deployment Template screen.
+       
 
+![01](https://raw.githubusercontent.com/SteveHardee/CrashCourse/main/artifacts/Images/InitialPrompt.png)<br><br>
 
-### Creating a new Resource Group and vNet
+- Confirm and/or select your appropriate Subscription
+- Create a new resource group for this lab. 
+    - Example: `Lab01`</b>
+- Provide the Administrative Password for your VMs.
+- Provide YOUR IP Address for the NSG Rules.
+    - You can get your IP by going to ipchicken.com or whatismyip.com
 
-- Navigate to Portal.Azure.Com
-    - Select Virtual Networks, create new Virtual Network
-        - Select your desired subscription
-        - Create a new resource group for this lab. 
-            - Example: `Resource Group: Lab01`</b>
-        - Name your Virtual Network
-            - Example: `Virtual Network Name: Lab01-VNET`</b><br><br>
-            ![01](https://raw.githubusercontent.com/SteveHardee/AzureVM/main/artifacts/images/CreateVirtualNetwork.png)<br><br>
-        - Select `Next: Security >`
-        - Select `Next: IP Addresses >`
-            - Here is where you configure your IP Range and Subnet.
-                - The script assumes this is set to the Subnet Name of `default` 
-                - With an IP Address Range of `10.0.0.0 - 10.0.0.255` 
-                <br>    
-                *The script will ask you to confirm these before deploying*.<br><br>
-            
-            
-                ![02](https://raw.githubusercontent.com/SteveHardee/AzureVM/main/artifacts/images/CreateSubnetRange.png)
-                
-                <br><br>
-        - Select `Review + create`
-        - Finally select `Create` <br>
-<br>
-
-*Wait for the new VNET to be created before proceeding*        
-
-
----
-
-
-
-
-
- <br>
- 
- ### Execute the template
- - With our new resource group and network ready, we can now launch our template.
-  
-   [![Deploy LAB](https://docs.microsoft.com/en-us/azure/templates/media/deploy-to-azure.svg)](https://portal.azure.com/#blade/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2FSteveHardee%2FCrashCourse%2Fmain%2FMain.json)
-
-<br>
-
-- Here we are prompted with our template.
-
-    ![03](https://raw.githubusercontent.com/SteveHardee/AzureVM/main/artifacts/images/Template01.png)<br><br>
-
-    This image shows us the default template when first launched.<br>
-
-    - We will need to provide our resource group that we just created - `Lab01` 
-    - Confirm the region that we want, by default this is `East US 2`
-    - Confirm our VM Size, by default this is `Standard_D2as_v5`
-    - Provide our VNET Name. This is the Virtual Network that we created in our [Prerequisites](https://github.com/SteveHardee/CrashCourse#prerequisites) section, which we used `Lab01-VNET`
-    - Provide our VNET Subnet name, unless you changed this it will be the provided `default`
-    - Provide our Domain Controllers IP Address, by default the script uses `10.0.0.4`
-    - Finally, we need to provide the Administrators password for the VMs. This will set the `AzureAdmin` account password on the VMs.
-
-    ![04](https://raw.githubusercontent.com/SteveHardee/AzureVM/main/artifacts/images/Template02.png)<br><br>
-    
-
-
----- 
-<br>
-
-1. The template will build each VM
-2. Generate the AD Domain Contoso.com
-3. Join each VM to the Contoso.com domain.
-
-<br>
-
-   ![05](https://raw.githubusercontent.com/SteveHardee/AzureVM/main/artifacts/images/ADUC.png)<br><br>
-
-    
-
- <br>
- 
-
-
-
-            
-
-
-
+          
 
 
 
