@@ -1,6 +1,7 @@
 # Welcome  
 
-This lab was specifically designed for the `Security Crash Course training`.  Special thanks to [Sean Greenbaum](https://GitHub.com/SeanGreenbaum) for his assistance and initial code that made this possible.
+This lab was specifically designed for the `Security Crash Course training`.  
+Special thanks to [Sean Greenbaum](https://GitHub.com/SeanGreenbaum) for his assistance and initial code that made this possible.
 <br><br>
 # Overview
 
