@@ -56,9 +56,6 @@
     "storageType": {
       "type": "string"
     },
-    "autoShutdownTime": {
-      "type": "string"
-    },
     "licensetype": {
       "type": "string"
     },
@@ -118,7 +115,7 @@
   "variables": {
     "osDiskName": "[concat(parameters('vmName'),'_OSDisk')]",
     "nicName": "[concat(parameters('vmName'), '-nic')]",
-    "githubURL": "https://raw.githubusercontent.com/SeanGreenbaum/CrashCourse/",    
+    "githubURL": "https://raw.githubusercontent.com/SteveHardee/CrashCourse/",    
     "nictemplateURI": "[concat(variables('githubURL'), parameters('CustomBranch'), '/scripts/nicdeploy.json')]",
     "nicpiptemplateURI": "[concat(variables('githubURL'), parameters('CustomBranch'), '/scripts/nicpipdeploy.json')]",
     "pipURI": "[concat(variables('githubURL'), parameters('CustomBranch'), '/scripts/PIP.json')]"
@@ -221,9 +218,7 @@
       "type": "Microsoft.Compute/virtualMachines",
       "apiVersion": "2022-11-01",
       "location": "[resourceGroup().location]",
-      "tags": {
-        "AutoShutDownTime": "[parameters('autoShutdownTime')]"
-      },
+      "tags": {},
       "dependsOn": [
         "[resourceId('Microsoft.Resources/deployments', concat('linked-nic-', parameters('vmName')))]",
         "[resourceId('Microsoft.Resources/deployments', concat('linked-nic-pip-', parameters('vmName')))]"

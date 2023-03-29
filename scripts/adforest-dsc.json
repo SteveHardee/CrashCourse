@@ -61,17 +61,6 @@
                 true
             ]
         },
-        "autoShutdownTime": {
-            "type": "string",
-            "defaultValue": "2300",
-            "allowedValues": [
-                "None",
-                "1730",
-                "2200",
-                "2300",
-                "2330"
-            ]
-        },
         "DomainDNSName": {
            "type": "string",
          "defaultValue": "contoso.com"
@@ -97,7 +86,7 @@
         }
     },
     "variables": {
-        "githubURL": "https://raw.githubusercontent.com/SeanGreenbaum/CrashCourse/",
+        "githubURL": "https://raw.githubusercontent.com/SteveHardee/CrashCourse/",
         "templates": {
             "vmURI": "[concat(variables('githubURL'), parameters('CustomBranch'), '/scripts/vmdeploy.json')]"
         },
@@ -205,9 +194,6 @@
                     },
                     "storageType": {
                         "value": "[parameters('storageType')]"
-                    },
-                    "autoShutdownTime": {
-                        "value": "[parameters('autoShutdownTime')]"
                     },
                     "licensetype": {
                         "value": "[variables('OperatingSystems')[parameters('vmOS')].vmLicense]"

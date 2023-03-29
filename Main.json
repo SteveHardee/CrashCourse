@@ -28,7 +28,7 @@
 		"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vNetName'), variables('vSubnetName'))]",
         "nsgname": "[concat('CrashCourse-Net-nsg')]",
         "CustomBranch": "main",
-        "githuburl": "https://raw.githubusercontent.com/SeanGreenbaum/CrashCourse/",
+        "githuburl": "https://raw.githubusercontent.com/SteveHardee/CrashCourse/",
         "templates": {
             "vmURI": "[concat(variables('githuburl'), variables('CustomBranch'), '/scripts/vmdeploy.json')]",
             "dcVMURI": "[concat(variables('githuburl'), variables('CustomBranch'), '/scripts/adforest-dsc.json')]",
@@ -130,9 +130,6 @@
                     "storageType": {
                         "value": "Standard_LRS"
                     },
-                    "autoShutdownTime": {
-                        "value": "None"
-                    },
                     "subnetRef": {
                         "value": "[variables('subnetRef')]"
                     },
@@ -215,9 +212,6 @@
                     },
                     "storageType": {
                         "value": "Standard_LRS"
-                    },
-                    "autoShutdownTime": {
-                        "value": "None"
                     },
                     "licensetype": {
                         "value": "Windows_Server"
@@ -302,9 +296,6 @@
                     "storageType": {
                         "value": "Standard_LRS"
                     },
-                    "autoShutdownTime": {
-                        "value": "None"
-                    },
                     "licensetype": {
                         "value": "Windows_Server"
                     },
@@ -387,9 +378,6 @@
                     },
                     "storageType": {
                         "value": "Standard_LRS"
-                    },
-                    "autoShutdownTime": {
-                        "value": "None"
                     },
                     "licensetype": {
                         "value": "Windows_Client"
@@ -477,9 +465,6 @@
                     "storageType": {
                         "value": "Standard_LRS"
                     },
-                    "autoShutdownTime": {
-                        "value": "None"
-                    },
                     "licensetype": {
                         "value": "Windows_Client"
                     },
@@ -564,9 +549,6 @@
                     "storageType": {
                         "value": "Standard_LRS"
                     },
-                    "autoShutdownTime": {
-                        "value": "None"
-                    },
                     "licensetype": {
                         "value": "Windows_Client"
                     },
@@ -650,9 +632,6 @@
                     },
                     "storageType": {
                         "value": "Standard_LRS"
-                    },
-                    "autoShutdownTime": {
-                        "value": "None"
                     },
                     "licensetype": {
                         "value": "Windows_Client"
