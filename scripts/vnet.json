@@ -16,12 +16,11 @@
         }
     },
   "variables": {
-    "vNetName": "[parameters('vNetName')]",
 	  "SubnetName": "Subnet1"
   },
   "resources": [
     {
-      "name": "[variables('vNetName')]",
+      "name": "[parameters('vNetName')]",
       "type": "Microsoft.Network/virtualNetworks",
       "location": "[resourceGroup().location]",
       "apiVersion": "2022-07-01",
