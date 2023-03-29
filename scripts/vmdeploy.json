@@ -120,6 +120,7 @@
     "nicName": "[concat(parameters('vmName'), '-nic')]",
     "githubURL": "https://raw.githubusercontent.com/SeanGreenbaum/CrashCourse/",    
     "nictemplateURI": "[concat(variables('githubURL'), parameters('CustomBranch'), '/scripts/nicdeploy.json')]",
+    "nicpiptemplateURI": "[concat(variables('githubURL'), parameters('CustomBranch'), '/scripts/nicpipdeploy.json')]",
     "pipURI": "[concat(variables('githubURL'), parameters('CustomBranch'), '/scripts/PIP.json')]"
   },
   "resources": [
@@ -165,7 +166,7 @@
       "properties": {
           "mode": "Incremental",
           "templateLink": {
-              "uri": "[variables('nictemplateURI')]",
+              "uri": "[variables('nicpiptemplateURI')]",
               "contentVersion": "1.0.0.0"
           },
           "parameters": {

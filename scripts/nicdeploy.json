@@ -8,10 +8,6 @@
     "subnetRef": {
       "type": "string"
     },
-    "publicIPAddressID": {
-      "type": "string",
-      "defaultValue": ""
-    },
     "acceleratedNetworking": {
       "type": "bool",
       "defaultValue": false
@@ -54,9 +50,6 @@
           {
             "name": "ipconfig1",
             "properties": {
-              "publicIPAddress": {
-                "id": "[if(equals(parameters('publicIPAddressID'), ''), '', parameters('publicIPAddressID'))]"
-              },
               "subnet": {
                 "id": "[parameters('subnetRef')]"
               },
