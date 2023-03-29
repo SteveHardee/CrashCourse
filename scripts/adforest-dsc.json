@@ -246,7 +246,7 @@
           "location": "[resourceGroup().location]",
           "apiVersion": "2022-11-01",
           "dependsOn":  [
-            "[concat(parameters('vmName'), '/AD-Forest')]"
+            "DC1/AD-Forest"
           ],
           "properties": {
             "publisher": "Microsoft.Compute",
