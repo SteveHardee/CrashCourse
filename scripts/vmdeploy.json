@@ -125,7 +125,7 @@
   "resources": [
     {
       "condition": "[equals(parameters('needspublicip'), bool('false'))]",
-      "apiVersion": "2021-04-01",
+      "apiVersion": "2022-09-01",
       "name": "[concat('linked-nic-', parameters('vmName'))]",
       "type": "Microsoft.Resources/deployments",
       "properties": {
@@ -159,7 +159,7 @@
     },
     {
       "condition": "[equals(parameters('needspublicip'), bool('true'))]",
-      "apiVersion": "2021-04-01",
+      "apiVersion": "2022-09-01",
       "name": "[concat('linked-nic-pip-', parameters('vmName'))]",
       "type": "Microsoft.Resources/deployments",
       "properties": {
@@ -198,7 +198,7 @@
     },
     {
       "condition": "[equals(parameters('needspublicip'), bool('true'))]",
-      "apiVersion": "2021-04-01",
+      "apiVersion": "2022-09-01",
       "name": "[concat('linked-pip-', parameters('vmName'))]",
       "type": "Microsoft.Resources/deployments",
       "properties": {
@@ -218,7 +218,7 @@
     {
       "name": "[parameters('vmName')]",
       "type": "Microsoft.Compute/virtualMachines",
-      "apiVersion": "2021-07-01",
+      "apiVersion": "2022-11-01",
       "location": "[resourceGroup().location]",
       "tags": {
         "AutoShutDownTime": "[parameters('autoShutdownTime')]"
@@ -290,7 +290,7 @@
     },
     {
       "condition": "[equals(parameters('DomainJoin'), 'Yes')]",
-      "apiVersion": "2021-03-01",
+      "apiVersion": "2022-11-01",
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "name": "[concat(parameters('vmName'),'/joindomain')]",
       "location": "[resourceGroup().location]",      

@@ -14,7 +14,7 @@
     "resources": [
         {
             "type": "Microsoft.Network/networkSecurityGroups",
-            "apiVersion": "2020-11-01",
+            "apiVersion": "2022-07-01",
             "name": "[parameters('NSGName')]",
             "location": "[resourceGroup().location]",
             "properties": {
