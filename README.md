@@ -15,7 +15,7 @@ The only information that you need to provide is the Resource Group that you wou
 
 | Deploy LAB to Azure | Instructions | 
 |:-------|:-------| 
-|  [![Deploy LAB](https://docs.microsoft.com/en-us/azure/templates/media/deploy-to-azure.svg)](https://portal.azure.com/#blade/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2FSteveHardee%2FCrashCourse%2Fmain%2FMain.json) |  [Deployment Instructions](hhttps://github.com/SteveHardee/CrashCourse/blob/main/README.md#Instructions)
+|  [![Deploy LAB](https://docs.microsoft.com/en-us/azure/templates/media/deploy-to-azure.svg)](https://portal.azure.com/#blade/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2FSteveHardee%2FCrashCourse%2Fmain%2FMain.json) |  [Deployment Instructions](https://github.com/SteveHardee/CrashCourse/blob/main/README.md#Instructions)
 
 <br>
 

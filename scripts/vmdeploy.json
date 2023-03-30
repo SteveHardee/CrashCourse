@@ -115,7 +115,8 @@
   "variables": {
     "osDiskName": "[concat(parameters('vmName'),'_OSDisk')]",
     "nicName": "[concat(parameters('vmName'), '-nic')]",
-    "githubURL": "https://raw.githubusercontent.com/SteveHardee/CrashCourse/",    
+    "githubURL": "https://raw.githubusercontent.com/SteveHardee/CrashCourse/",
+    "artifactsuri": "[concat(variables('githubURL'), parameters('CustomBranch'), '/artifacts/')]",
     "nictemplateURI": "[concat(variables('githubURL'), parameters('CustomBranch'), '/scripts/nicdeploy.json')]",
     "nicpiptemplateURI": "[concat(variables('githubURL'), parameters('CustomBranch'), '/scripts/nicpipdeploy.json')]",
     "pipURI": "[concat(variables('githubURL'), parameters('CustomBranch'), '/scripts/PIP.json')]"
@@ -307,6 +308,29 @@
         "protectedSettings": {
           "Password": "[parameters('DomainJoinPassword')]"
         }
+      }
+    },
+    {
+      "condition": "[equals(parameters('needspublicip'), bool('true'))]",
+      "name": "[concat(parameters('vmName'), '/DownloadLabFiles')]",
+      "type":"Microsoft.Compute/virtualMachines/extensions",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2022-11-01",
+      "dependsOn":  [
+        "[resourceId('Microsoft.Compute/virtualMachines/extensions', parameters('vmName'), 'joindomain')]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Compute",
+        "type": "CustomScriptExtension",
+        "typeHandlerVersion": "1.9",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+            "commandToExecute": "powershell -ExecutionPolicy Unrestricted -File DownloadLabs.ps1",
+            "fileUris": [
+                "[uri(variables('artifactsuri'), 'DownloadLabs.ps1')]"
+            ]
+        },
+        "protectedSettings": {}
       }
     }
   ],
