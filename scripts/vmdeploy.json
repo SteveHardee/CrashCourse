@@ -115,7 +115,7 @@
   "variables": {
     "osDiskName": "[concat(parameters('vmName'),'_OSDisk')]",
     "nicName": "[concat(parameters('vmName'), '-nic')]",
-    "githubURL": "https://raw.githubusercontent.com/SeanGreenbaum/CrashCourse/",
+    "githubURL": "https://raw.githubusercontent.com/SteveHardee/CrashCourse/",
     "artifactsuri": "[concat(variables('githubURL'), parameters('CustomBranch'), '/artifacts/')]",
     "nictemplateURI": "[concat(variables('githubURL'), parameters('CustomBranch'), '/scripts/nicdeploy.json')]",
     "nicpiptemplateURI": "[concat(variables('githubURL'), parameters('CustomBranch'), '/scripts/nicpipdeploy.json')]",
@@ -312,7 +312,7 @@
     },
     {
       "condition": "[equals(parameters('needspublicip'), bool('true'))]",
-      "name": "[concat(parameters('vmName'), '/PostDCConfig')]",
+      "name": "[concat(parameters('vmName'), '/DownloadLabFiles')]",
       "type":"Microsoft.Compute/virtualMachines/extensions",
       "location": "[resourceGroup().location]",
       "apiVersion": "2022-11-01",

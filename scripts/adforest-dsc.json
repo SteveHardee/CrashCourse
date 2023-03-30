@@ -86,7 +86,7 @@
         }
     },
     "variables": {
-        "githubURL": "https://raw.githubusercontent.com/SeanGreenbaum/CrashCourse/",
+        "githubURL": "https://raw.githubusercontent.com/SteveHardee/CrashCourse/",
         "templates": {
             "vmURI": "[concat(variables('githubURL'), parameters('CustomBranch'), '/scripts/vmdeploy.json')]"
         },
