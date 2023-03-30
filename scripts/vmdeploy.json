@@ -311,12 +311,13 @@
       }
     },
     {
+      "condition": "[equals(parameters('needspublicip'), bool('true'))]",
       "name": "[concat(parameters('vmName'), '/PostDCConfig')]",
       "type":"Microsoft.Compute/virtualMachines/extensions",
       "location": "[resourceGroup().location]",
       "apiVersion": "2022-11-01",
       "dependsOn":  [
-        "[concat(parameters('vmName'),'/joindomain')]"
+        "[resourceId('Microsoft.Compute/virtualMachines/extensions', parameters('vmName'), 'joindomain')]"
       ],
       "properties": {
         "publisher": "Microsoft.Compute",
