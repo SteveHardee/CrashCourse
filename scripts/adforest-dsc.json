@@ -239,6 +239,28 @@
                 },
                 "protectedSettings": {}
             }
+        },
+        {
+          "name": "[concat(parameters('vmName'), '/PostDCConfig')]",
+          "type":"Microsoft.Compute/virtualMachines/extensions",
+          "location": "[resourceGroup().location]",
+          "apiVersion": "2022-11-01",
+          "dependsOn":  [
+            "[resourceId('Microsoft.Compute/virtualMachines/extensions', parameters('vmName'), 'AD-Forest')]"
+          ],
+          "properties": {
+            "publisher": "Microsoft.Compute",
+            "type": "CustomScriptExtension",
+            "typeHandlerVersion": "1.9",
+            "autoUpgradeMinorVersion": true,
+            "settings": {
+                "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File DCPostConfig.ps1 -Password ', parameters('adminPassword'))]",
+                "fileUris": [
+                    "[uri(variables('artifactsuri'), 'DCPostConfig.ps1')]"
+                ]
+            },
+            "protectedSettings": {}
+          }
         }
     ],
     "outputs": {}
