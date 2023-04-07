@@ -1,5 +1,5 @@
 $localdownloadpath = "C:\Labs"
-$downloadURL = "https://github.com/SteveHardee/CrashCourse/blob/main/artifacts/LabFiles.zip"
+$downloadURL = "https://github.com/SteveHardee/CrashCourse/raw/main/artifacts/LabFiles.zip"
 $filename = $downloadURL.Substring($downloadURL.LastIndexOf("/")+1)
 $fullpath = $localdownloadpath + "\" + $filename
 $extractedpath = $localdownloadpath + "\" + $filename.Split('.')[0]
