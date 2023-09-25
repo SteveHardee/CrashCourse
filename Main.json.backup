@@ -1,0 +1,666 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vmSize": {
+            "type": "string",
+            "defaultValue": "Standard_D2as_v5",
+            "allowedValues": [
+                "Standard_D2s_v5",
+                "Standard_D2as_v5"
+            ]
+		},
+        "adminPassword": {
+            "type": "securestring"
+        },
+        "YourIPAddress": {
+            "type": "string",
+            "defaultValue": "10.11.12.13"
+        }
+
+    },
+    "variables": {
+        "vNetName": "CrashCourse-Net",
+        "vSubnetName": "Subnet1",
+        "vNetAddressSpace": "10.0.0.0/24",
+        "vNetSubnet1Space": "10.0.0.0/24",
+        "DCIPAddress": "10.0.0.4",
+		"subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vNetName'), variables('vSubnetName'))]",
+        "nsgname": "[concat('CrashCourse-Net-nsg')]",
+        "CustomBranch": "main",
+        "githuburl": "https://raw.githubusercontent.com/SteveHardee/CrashCourse/",
+        "templates": {
+            "vmURI": "[concat(variables('githuburl'), variables('CustomBranch'), '/scripts/vmdeploy.json')]",
+            "dcVMURI": "[concat(variables('githuburl'), variables('CustomBranch'), '/scripts/adforest-dsc.json')]",
+            "vNetURI": "[concat(variables('githuburl'), variables('CustomBranch'), '/scripts/vnet.json')]",
+            "NSGURI": "[concat(variables('githuburl'), variables('CustomBranch'), '/scripts/nsg.json')]"
+        },
+        "adminUserName": "AzureAdmin",
+        "VM1Name": "DC1",
+        "VM2Name": "Server2016",
+        "VM3Name": "Server2008R2",
+        "VM4Name": "Win10-Manual",
+        "VM5Name": "Win10-GPO",
+        "VM6Name": "Win10-Intune",
+        "VM7Name": "Win7",
+        "DomainDNSName": "contoso.com",
+        "DomainNetBIOSName": "contoso",
+        "ADScriptName": "dc-build.ps1",
+        "ADScriptNameZIP": "[concat(variables('ADScriptName'), '.zip')]"
+    },
+    "resources": [
+        {
+            "apiVersion": "2022-09-01",
+            "name": "[variables('nsgname')]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('templates').NSGURI]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "NSGName": {
+                        "value": "[variables('nsgname')]"
+                    },
+                    "YourPublicIP": {
+                        "value": "[parameters('YourIPAddress')]"
+                    }
+                }
+            }
+        },
+        {
+            "apiVersion": "2022-09-01",
+            "name": "[variables('vNetName')]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('templates').vNetURI]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "vNetName": {
+                        "value": "[variables('vNetName')]"
+                    },
+                    "AddressSpace": {
+                        "value": "[variables('vNetAddressSpace')]"
+                    },
+                    "Subnet1-AddressSpace": {
+                        "value": "[variables('vNetSubnet1Space')]"
+                    },
+                    "NSGid": {
+                        "value": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgname'))]"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[variables('nsgname')]"
+            ]
+        },
+        {
+            "apiVersion": "2022-09-01",
+            "name": "[concat('linked-adforest-vm-', variables('VM1Name'))]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('templates').dcVMURI]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "vmName": {
+                        "value": "[variables('VM1Name')]"
+                    },
+                    "adminUsername": {
+                        "value": "[variables('adminUsername')]"
+                    },
+                    "adminPassword": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "vmSize": {
+                        "value": "[parameters('vmSize')]"
+                    },
+                    "vmOS": {
+                        "value": "2022-datacenter-smalldisk-g2"
+                    },
+                    "vmOSversion": {
+                        "value": "latest"
+                    },
+                    "storageType": {
+                        "value": "Standard_LRS"
+                    },
+                    "subnetRef": {
+                        "value": "[variables('subnetRef')]"
+                    },
+                    "DCIPAddress": {
+                        "value": "[variables('DCIPAddress')]"
+                    },
+                    "DomainDNSName": {
+                        "value": "[variables('DomainDNSName')]"
+                    },
+                    "DomainNetBIOSName": {
+                        "value": "[variables('DomainNetBIOSName')]"
+                    },
+                    "CustomBranch": {
+                        "value": "[variables('CustomBranch')]"
+                    },
+                    "ADScriptName": {
+                        "value": "[variables('ADScriptName')]"
+                    },
+                    "ADScriptNameZIP": {
+                        "value": "[variables('ADScriptNameZIP')]"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[variables('vNetName')]"
+            ]
+        },
+        {
+            "apiVersion": "2022-09-01",
+            "name": "[concat('linked-vm-', variables('VM2Name'))]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('templates').vmURI]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "vmName": {
+                        "value": "[variables('VM2Name')]"
+                    },
+                    "adminUsername": {
+                        "value": "[variables('adminUsername')]"
+                    },
+                    "adminPassword": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "vmSize": {
+                        "value": "[parameters('vmSize')]"
+                    },
+                    "datadiskcount": {
+                        "value": 0
+                    },
+                    "datadiskcaching": {
+                        "value": "None"
+                    },
+                    "datadisksize": {
+                        "value": 0
+                    },
+                    "subnetRef": {
+                        "value": "[variables('subnetRef')]"
+                    },
+                    "CustomDNS": {
+                        "value": "[array(variables('DCIPAddress'))]"
+                    },
+                    "acceleratedNetworking": {
+	                    "value": false
+	                },
+                    "vmOS": {
+                        "value": "2016-datacenter-smalldisk-g2"
+                    },
+                    "vmOSversion": {
+                        "value": "latest"
+                    },
+                    "vmPublisher": {
+                        "value": "MicrosoftWindowsServer"
+                    },
+                    "vmOffer": {
+                        "value": "WindowsServer"
+                    },
+                    "storageType": {
+                        "value": "Standard_LRS"
+                    },
+                    "licensetype": {
+                        "value": "Windows_Server"
+                    },
+                    "timeZone": {
+                        "value": "Eastern Standard Time"
+                    },
+                    "DomainJoin": {
+                        "value": "Yes"
+                    },
+                    "DomainToJoin": {
+                        "value": "[variables('DomainDNSName')]"
+                    },
+                    "DomainJoinUserName": {
+                        "value": "[concat(variables('DomainNetBIOSName'), '\\', variables('adminUserName'))]"
+                    },
+                    "DomainJoinPassword": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "CustomBranch": {
+                    "value": "[variables('CustomBranch')]"
+                   }
+                }
+            },
+            "dependsOn": [
+                "[concat('linked-adforest-vm-', variables('VM1Name'))]"
+            ]
+        },
+        {
+            "apiVersion": "2022-09-01",
+            "name": "[concat('linked-vm-', variables('VM3Name'))]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('templates').vmURI]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "vmName": {
+                        "value": "[variables('VM3Name')]"
+                    },
+                    "adminUsername": {
+                        "value": "[variables('adminUsername')]"
+                    },
+                    "adminPassword": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "vmSize": {
+                        "value": "[parameters('vmSize')]"
+                    },
+                    "datadiskcount": {
+                        "value": 0
+                    },
+                    "datadiskcaching": {
+                        "value": "None"
+                    },
+                    "datadisksize": {
+                        "value": 0
+                    },
+                    "subnetRef": {
+                        "value": "[variables('subnetRef')]"
+                    },
+                    "CustomDNS": {
+                        "value": "[array(variables('DCIPAddress'))]"
+                    },
+                    "acceleratedNetworking": {
+	                    "value": false
+	                },
+                    "vmOS": {
+                        "value": "2008-R2-SP1-smalldisk"
+                    },
+                    "vmOSversion": {
+                        "value": "latest"
+                    },
+                    "vmPublisher": {
+                        "value": "MicrosoftWindowsServer"
+                    },
+                    "vmOffer": {
+                        "value": "WindowsServer"
+                    },
+                    "storageType": {
+                        "value": "Standard_LRS"
+                    },
+                    "licensetype": {
+                        "value": "Windows_Server"
+                    },
+                    "timeZone": {
+                        "value": "Eastern Standard Time"
+                    },
+                    "DomainJoin": {
+                        "value": "Yes"
+                    },
+                    "DomainToJoin": {
+                        "value": "[variables('DomainDNSName')]"
+                    },
+                    "DomainJoinUserName": {
+                        "value": "[concat(variables('DomainNetBIOSName'), '\\', variables('adminUserName'))]"
+                    },
+                    "DomainJoinPassword": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "CustomBranch": {
+                        "value": "[variables('CustomBranch')]"
+                    }
+                }
+            },
+            "dependsOn": [
+             "[concat('linked-adforest-vm-', variables('VM1Name'))]"
+            ]
+        },
+        {
+            "apiVersion": "2022-09-01",
+            "name": "[concat('linked-vm-', variables('VM4Name'))]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('templates').vmURI]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "vmName": {
+                        "value": "[variables('VM4Name')]"
+                    },
+                    "adminUsername": {
+                        "value": "[variables('adminUsername')]"
+                    },
+                    "adminPassword": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "vmSize": {
+                        "value": "[parameters('vmSize')]"
+                    },
+                    "datadiskcount": {
+                        "value": 0
+                    },
+                    "datadiskcaching": {
+                        "value": "None"
+                    },
+                    "datadisksize": {
+                        "value": 0
+                    },
+                    "subnetRef": {
+                        "value": "[variables('subnetRef')]"
+                    },
+                    "CustomDNS": {
+                        "value": "[array(variables('DCIPAddress'))]"
+                    },
+                    "acceleratedNetworking": {
+	                    "value": false
+	                },
+                    "vmOS": {
+                        "value": "win10-22h2-ent-g2"
+                    },
+                    "vmOSversion": {
+                        "value": "latest"
+                    },
+                    "vmPublisher": {
+                        "value": "MicrosoftWindowsDesktop"
+                    },
+                    "vmOffer": {
+                        "value": "Windows-10"
+                    },
+                    "storageType": {
+                        "value": "Standard_LRS"
+                    },
+                    "licensetype": {
+                        "value": "Windows_Client"
+                    },
+                    "timeZone": {
+                        "value": "Eastern Standard Time"
+                    },
+                    "DomainJoin": {
+                        "value": "Yes"
+                    },
+                    "DomainToJoin": {
+                        "value": "[variables('DomainDNSName')]"
+                    },
+                    "DomainJoinUserName": {
+                        "value": "[concat(variables('DomainNetBIOSName'), '\\', variables('adminUserName'))]"
+                    },
+                    "DomainJoinPassword": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "needspublicip": { 
+                        "value": "[bool('true')]"
+                    },
+                    "CustomBranch": {
+                        "value": "[variables('CustomBranch')]"
+                    }
+                }
+            },
+            "dependsOn": [
+             "[concat('linked-adforest-vm-', variables('VM1Name'))]"
+            ]
+        },
+        {
+            "apiVersion": "2022-09-01",
+            "name": "[concat('linked-vm-', variables('VM5Name'))]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('templates').vmURI]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "vmName": {
+                        "value": "[variables('VM5Name')]"
+                    },
+                    "adminUsername": {
+                        "value": "[variables('adminUsername')]"
+                    },
+                    "adminPassword": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "vmSize": {
+                        "value": "[parameters('vmSize')]"
+                    },
+                    "datadiskcount": {
+                        "value": 0
+                    },
+                    "datadiskcaching": {
+                        "value": "None"
+                    },
+                    "datadisksize": {
+                        "value": 0
+                    },
+                    "subnetRef": {
+                        "value": "[variables('subnetRef')]"
+                    },
+                    "CustomDNS": {
+                        "value": "[array(variables('DCIPAddress'))]"
+                    },
+                    "acceleratedNetworking": {
+	                    "value": false
+	                },
+                    "vmOS": {
+                        "value": "win10-22h2-ent-g2"
+                    },
+                    "vmOSversion": {
+                        "value": "latest"
+                    },
+                    "vmPublisher": {
+                        "value": "MicrosoftWindowsDesktop"
+                    },
+                    "vmOffer": {
+                        "value": "Windows-10"
+                    },
+                    "storageType": {
+                        "value": "Standard_LRS"
+                    },
+                    "licensetype": {
+                        "value": "Windows_Client"
+                    },
+                    "timeZone": {
+                        "value": "Eastern Standard Time"
+                    },
+                    "DomainJoin": {
+                        "value": "Yes"
+                    },
+                    "DomainToJoin": {
+                        "value": "[variables('DomainDNSName')]"
+                    },
+                    "DomainJoinUserName": {
+                        "value": "[concat(variables('DomainNetBIOSName'), '\\', variables('adminUserName'))]"
+                    },
+                    "DomainJoinPassword": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "CustomBranch": {
+                        "value": "[variables('CustomBranch')]"
+                    }
+                }
+            },
+            "dependsOn": [
+             "[concat('linked-adforest-vm-', variables('VM1Name'))]"
+            ]
+        
+        },
+        {
+            "apiVersion": "2022-09-01",
+            "name": "[concat('linked-vm-', variables('VM6Name'))]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('templates').vmURI]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "vmName": {
+                        "value": "[variables('VM6Name')]"
+                    },
+                    "adminUsername": {
+                        "value": "[variables('adminUsername')]"
+                    },
+                    "adminPassword": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "vmSize": {
+                        "value": "[parameters('vmSize')]"
+                    },
+                    "datadiskcount": {
+                        "value": 0
+                    },
+                    "datadiskcaching": {
+                        "value": "None"
+                    },
+                    "datadisksize": {
+                        "value": 0
+                    },
+                    "subnetRef": {
+                        "value": "[variables('subnetRef')]"
+                    },
+                    "CustomDNS": {
+                        "value": "[array(variables('DCIPAddress'))]"
+                    },
+                    "acceleratedNetworking": {
+	                    "value": false
+	                },
+                    "vmOS": {
+                        "value": "win10-22h2-ent-g2"
+                    },
+                    "vmOSversion": {
+                        "value": "latest"
+                    },
+                    "vmPublisher": {
+                        "value": "MicrosoftWindowsDesktop"
+                    },
+                    "vmOffer": {
+                        "value": "Windows-10"
+                    },
+                    "storageType": {
+                        "value": "Standard_LRS"
+                    },
+                    "licensetype": {
+                        "value": "Windows_Client"
+                    },
+                    "timeZone": {
+                        "value": "Eastern Standard Time"
+                    },
+                    "DomainJoin": {
+                        "value": "Yes"
+                    },
+                    "DomainToJoin": {
+                        "value": "[variables('DomainDNSName')]"
+                    },
+                    "DomainJoinUserName": {
+                        "value": "[concat(variables('DomainNetBIOSName'), '\\', variables('adminUserName'))]"
+                    },
+                    "DomainJoinPassword": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "CustomBranch": {
+                        "value": "[variables('CustomBranch')]"
+                    }
+                }
+            },
+            "dependsOn": [
+             "[concat('linked-adforest-vm-', variables('VM1Name'))]"
+            ]
+        
+        },
+        {
+            "apiVersion": "2022-09-01",
+            "name": "[concat('linked-vm-', variables('VM7Name'))]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('templates').vmURI]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "vmName": {
+                        "value": "[variables('VM7Name')]"
+                    },
+                    "adminUsername": {
+                        "value": "[variables('adminUsername')]"
+                    },
+                    "adminPassword": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "vmSize": {
+                        "value": "[parameters('vmSize')]"
+                    },
+                    "datadiskcount": {
+                        "value": 0
+                    },
+                    "datadiskcaching": {
+                        "value": "None"
+                    },
+                    "datadisksize": {
+                        "value": 0
+                    },
+                    "subnetRef": {
+                        "value": "[variables('subnetRef')]"
+                    },
+                    "CustomDNS": {
+                        "value": "[array(variables('DCIPAddress'))]"
+                    },
+                    "acceleratedNetworking": {
+	                    "value": false
+	                },
+                    "vmOS": {
+                        "value": "win7-enterprise"
+                    },
+                    "vmOSversion": {
+                        "value": "latest"
+                    },
+                    "vmPublisher": {
+                        "value": "MicrosoftWindowsDesktop"
+                    },
+                    "vmOffer": {
+                        "value": "Windows-7"
+                    },
+                    "storageType": {
+                        "value": "Standard_LRS"
+                    },
+                    "licensetype": {
+                        "value": "Windows_Client"
+                    },
+                    "timeZone": {
+                        "value": "Eastern Standard Time"
+                    },
+                    "DomainJoin": {
+                        "value": "Yes"
+                    },
+                    "DomainToJoin": {
+                        "value": "[variables('DomainDNSName')]"
+                    },
+                    "DomainJoinUserName": {
+                        "value": "[concat(variables('DomainNetBIOSName'), '\\', variables('adminUserName'))]"
+                    },
+                    "DomainJoinPassword": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "CustomBranch": {
+                        "value": "[variables('CustomBranch')]"
+                    }
+                }
+            },
+            "dependsOn": [
+             "[concat('linked-adforest-vm-', variables('VM1Name'))]"
+            ]
+        
+        }
+    ],
+    "outputs": {}
+}
