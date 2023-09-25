@@ -42,7 +42,6 @@
         "VM4Name": "Win10-Manual",
         "VM5Name": "Win10-GPO",
         "VM6Name": "Win10-Intune",
-        "VM7Name": "Win7",
         "DomainDNSName": "contoso.com",
         "DomainNetBIOSName": "contoso",
         "ADScriptName": "dc-build.ps1",
@@ -578,89 +577,6 @@
         
         },
         {
-            "apiVersion": "2022-09-01",
-            "name": "[concat('linked-vm-', variables('VM7Name'))]",
-            "type": "Microsoft.Resources/deployments",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[variables('templates').vmURI]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "vmName": {
-                        "value": "[variables('VM7Name')]"
-                    },
-                    "adminUsername": {
-                        "value": "[variables('adminUsername')]"
-                    },
-                    "adminPassword": {
-                        "value": "[parameters('adminPassword')]"
-                    },
-                    "vmSize": {
-                        "value": "[parameters('vmSize')]"
-                    },
-                    "datadiskcount": {
-                        "value": 0
-                    },
-                    "datadiskcaching": {
-                        "value": "None"
-                    },
-                    "datadisksize": {
-                        "value": 0
-                    },
-                    "subnetRef": {
-                        "value": "[variables('subnetRef')]"
-                    },
-                    "CustomDNS": {
-                        "value": "[array(variables('DCIPAddress'))]"
-                    },
-                    "acceleratedNetworking": {
-	                    "value": false
-	                },
-                    "vmOS": {
-                        "value": "win7-enterprise"
-                    },
-                    "vmOSversion": {
-                        "value": "latest"
-                    },
-                    "vmPublisher": {
-                        "value": "MicrosoftWindowsDesktop"
-                    },
-                    "vmOffer": {
-                        "value": "Windows-7"
-                    },
-                    "storageType": {
-                        "value": "Standard_LRS"
-                    },
-                    "licensetype": {
-                        "value": "Windows_Client"
-                    },
-                    "timeZone": {
-                        "value": "Eastern Standard Time"
-                    },
-                    "DomainJoin": {
-                        "value": "Yes"
-                    },
-                    "DomainToJoin": {
-                        "value": "[variables('DomainDNSName')]"
-                    },
-                    "DomainJoinUserName": {
-                        "value": "[concat(variables('DomainNetBIOSName'), '\\', variables('adminUserName'))]"
-                    },
-                    "DomainJoinPassword": {
-                        "value": "[parameters('adminPassword')]"
-                    },
-                    "CustomBranch": {
-                        "value": "[variables('CustomBranch')]"
-                    }
-                }
-            },
-            "dependsOn": [
-             "[concat('linked-adforest-vm-', variables('VM1Name'))]"
-            ]
-        
-        }
     ],
     "outputs": {}
 }
