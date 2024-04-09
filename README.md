@@ -25,11 +25,10 @@ The only information that you need to provide is the Resource Group that you wou
 | :--- | :------| 
 | DC1 | Windows Server 2022 |
 | Server2016 | Windows Server 2016 | 
-| Server2008R2 | Windows Server 2008 R2 |
-| Win10-Manual | Windows 10 | 
-| Win10-GPO | Windows 10 | 
-| Win10-Intune | Windows 10 | 
-| Win7 | Windows 7 Enterprise |
+| Workstation01 | Windows 10 | 
+| Workstation02 | Windows 10 | 
+| Workstation03 | Windows 10 | 
+
 
 <br>
 
